@@ -1,0 +1,23 @@
+{
+  "name": "koa-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start":"node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fireairforce/koa-learning.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireairforce/koa-learning/issues"
+  },
+  "homepage": "https://github.com/fireairforce/koa-learning#readme",
+  "dependencies": {
+    "koa": "^2.7.0"
+  }
+}
