@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/fireairforce/koa-learning#readme",
   "dependencies": {
     "ejs": "^2.6.2",
-    "koa": "^2.7.0"
+    "koa": "^2.7.0",
+    "pug": "^2.0.4"
   }
 }
