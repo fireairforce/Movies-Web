@@ -1,4 +1,4 @@
-//- 实现一个继承的关系
+
 extends ./layouts/default
 
 block title 
@@ -115,6 +115,7 @@ block content
      #videoModal.modal-content
 
 include ./includes/script
+
     script. 
         var player = null;
 
@@ -130,22 +131,24 @@ include ./includes/script
 
             $('#myModal').modal('show')
 
-            if(!player){
-                player = new DPlayer({
-                    container: document.getElementById('videoModal')
-                    screenshot: true,
-                    video:{
-                        url:video,
-                        pic: image,
-                        thumbnails: image
+                if(!player){
+                    player = new DPlayer({
+                        container: document.getElementById('videoModal')
+                        screenshot: true,
+                        video:{
+                            url:video,
+                            pic: image,
+                            thumbnails: image
+                        }
+                    })
+                } else {
+                    if(play.video.currentSrc !==video){
+                           player.switchVideo({
+                                url: video,
+                                pic: image,
+                                type: 'auto'
+                            })
                     }
-                })
-            } else {
-                player.switchVideo({
-                    url: video,
-                    pic: image,
-                    type: 'auto'
-                })
-            }
+                }
+            })
         })
-    })
