@@ -31,11 +31,11 @@ const sleep = time => new Promise(resolve => {
         var links = [];
         if (items.length >= 1) {
             items.each((index, item) => {
-                let it = $(item);
-                let doubanId = it.find('div').data('id');
-                let title = it.find('.title').text();
-                let rate = Number(it.find('.rate').text());
-                let poster = it.find('img').attr('src').replace('s_ratio', 'l_ratio');
+                var it = $(item);
+                var doubanId = it.find('div').data('id');
+                var title = it.find('.title').text();
+                var rate = Number(it.find('.rate').text());
+                var poster = it.find('img').attr('src').replace('s_ratio', 'l_ratio');
                 links.push({
                     doubanId,
                     title,
@@ -47,5 +47,6 @@ const sleep = time => new Promise(resolve => {
         }
     })
     broswer.close();
-    console.log(result);
+    process.send({ result });
+    process.exit(0);
 })()
