@@ -1,65 +1,54 @@
 const url = `https://movie.douban.com/tag/#/?sort=U&range=6,10&tags=`
-
 const puppeteer = require('puppeteer');
 
 const sleep = time => new Promise(resolve => {
     setTimeout(resolve,time)
 });
-
-// 声明一个自动执行的函数
-let doubanScrape = async ()=>{
-   console.log('Start vist the target page');
-
-   const browser = await puppeteer.launch({
-       args: ['--no-sandbox'],   // 启动非沙箱模式
-       dumpio: false
-   })
-
-   const page = await browser.newPage();
-   await page.goto(url,{
-       waitUntil: 'networkidle2'
-   })
-    //    等待3000ms再做其他函数
-   await sleep(3000);
-   //    等到页面出现加载更多的按钮之后再执行
-   await page.waitForSelector('.more')
-  //    写一个循环相当于抓取两页的内容
-  for(let i =0;i<1;i++){ 
-      await sleep(3000);
-      await page.click('.more'); 
-  }
-   //   我们要抓取的是电影的doubanID,名称，评分和海报名称
-   //  page.evaluate可以让我们使用内置的DOM选择器，比如querySelector()    
-   const result = await page.evaluate(()=>{
-         let items = document.querySelectorAll('.list-wp a');
-         return items;
-   })
-  return result;
-//  const result =  await page.evaluate(() => {
-//       var $ = window.$;
-//       var items = $('.list-wp a')
-//        // links来存储爬取到的数据
-//        var links = [];
-//       if(items.length>=1){  // 如果items爬出到的数据不为空
-//            items.each((item,index)=>{
-//                 let it = $(item);
-//                 // 获取豆瓣的ID
-//                 let doubanId = it.find('div').data('id');
-//                 let title = it.find('.title').text();
-//                 let rate = Number(it.find('.title').text());
-//                 // 我们这里拿到的是一个比较小的图片，通过分析图片的url地址，可以考虑将s_radio换成l_radio来获取到一个高清的图片
-//                 // let poster = it.find('img').attr('src').replace('s_ratio','l_ratio')
-//                 let poster = " "
-//                 links.push({
-//                     doubanId,
-//                     title,
-//                     rate,
-//                     poster
-//                 })
-//            })
-//       }
-//      return links;
-//   })
-  browser.close();
+let scrape = async() => {
+    console.log('Start Now');
+    // 将其设置为没有沙箱的模式
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox'],
+        dumpio: false
+    })
+    const page = await browser.newPage();
+    await page.goto(url,{
+        waitUntil:'networkidle2'
+    })
+    await page.waitFor(3000);
+    await page.waitForSelector('.more');
+    for(let i = 0;i<2;i++){
+        await page.click('.more');
+        await page.waitFor(3000);
+    }
+    // evaluate 可以使得在函数里面能够使用dom操作
+    const result = await page.evaluate(()=>{
+        let items = document.querySelectorAll('a.item')
+        let links = [];
+        if(items.length>=1){
+          items.forEach((item,index)=>{
+              let text = item.innerText;
+              //   电影的评分
+              let rate = Number(text.slice(text.length-4,text.length));
+              //  电影的标题
+              let title = item.innerText.slice(0,-4);
+              // 电影的doubanID
+              let doubanID = item.pathname.match(/\d+/)[0];
+              // 电影的海报图片地址
+              let poster = item.childNodes[0].childNodes[0].childNodes[0].currentSrc.replace('s_ratio','l_ratio')
+              links.push({
+                  rate,
+                  title,
+                  doubanID,
+                  poster
+              })
+          })
+        }
+        return links;
+    })
+    browser.close();
+    return result;
 }
-doubanScrape().then
+scrape().then(value=>{
+    console.log(value)
+})

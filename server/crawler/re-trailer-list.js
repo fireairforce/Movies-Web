@@ -1,54 +1,51 @@
 const url = `https://movie.douban.com/tag/#/?sort=U&range=6,10&tags=`
-const $ = require('jquery');
 const puppeteer = require('puppeteer');
 
 const sleep = time => new Promise(resolve => {
-    setTimeout(resolve,time)
+    setTimeout(resolve, time);
 });
-let scrape = async() => {
-    console.log('Start Now');
-    // 将其设置为没有沙箱的模式
-    const browser = await puppeteer.launch({
+
+(async () => {
+    console.log('start now');
+    // 相当于是个看不到的浏览器
+    const broswer = await puppeteer.launch({
         args: ['--no-sandbox'],
         dumpio: false
     })
-    const page = await browser.newPage();
-    await page.goto(url,{
-        waitUntil:'networkidle2'
+    const page = await broswer.newPage();
+    await page.goto(url, {
+        waitUntil: 'networkidle2'
+        // 当网页空闲的时候，表示页面已经加载完成了
     })
-    await page.waitFor(3000);
+    await sleep(3000);
     await page.waitForSelector('.more');
-    for(let i = 0;i<2;i++){
-        await page.click('.more');
-        await page.waitFor(3000);
+    for (let i = 0; i < 2; i++) {
+        // 只爬取三页的数据
+        await page.click('.more')
     }
-    const result = await page.evaluate(()=>{
-        let items = document.querySelectorAll('a.item')
-        let links = [];
-        if(items.length>=1){
-          items.forEach((item,index)=>{
-              let text = item.innerText;
-              //   电影的评分
-              let rate = Number(text.slice(text.length-4,text.length));
-              //  电影的标题
-              let title = item.innerText.slice(0,-4);
-              // 电影的doubanID
-              let doubanID = item.pathname.match(/\d+/)[0];
-              // 电影的海报图片地址
-              let poster = item.childNodes[0].childNodes[0].childNodes[0].currentSrc.replace('s_ratio','l_ratio')
-              links.push({
-                  rate,
-                  title,
-                  doubanID,
-                  poster
-              })
-          })
+    // 对数据进行抓取
+    const result = await page.evaluate(() => {
+        //  回调函数里面的代码都是在浏览器环境里面执行的,用 var 声明变量可能比较保险  
+        var $ = window.$;
+        var items = $('.list-wp a');
+        var links = [];
+        if (items.length >= 1) {
+            items.each((index, item) => {
+                let it = $(item);
+                let doubanId = it.find('div').data('id');
+                let title = it.find('.title').text();
+                let rate = Number(it.find('.rate').text());
+                let poster = it.find('img').attr('src').replace('s_ratio', 'l_ratio');
+                links.push({
+                    doubanId,
+                    title,
+                    rate,
+                    poster
+                })
+            })
+            return links;
         }
-        return links;
     })
-    browser.close();
-    return result;
-}
-scrape().then(value=>{
-    console.log(value)
-})
+    broswer.close();
+    console.log(result);
+})()
