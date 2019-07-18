@@ -47,6 +47,5 @@ const sleep = time => new Promise(resolve => {
         }
     })
     broswer.close();
-    process.send({ result });
-    process.exit(0);
-})()
+    console.log(result);
+})();

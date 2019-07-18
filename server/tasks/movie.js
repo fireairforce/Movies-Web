@@ -23,7 +23,7 @@ const {
         if (invoked) {
             return;
         } else {
-            invoked = false;
+            invoked = true;
         }
         let err = code === 0 ? null : new Error('exit code ' + code);
         console.log('err: ', err);
