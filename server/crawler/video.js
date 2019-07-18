@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 
 const base = `https://movie.douban.com/subject/`;
-const doubanId = '26739551';
+const doubanId = '1849031';
 const videoBase = `https://movie.douban.com/trailer/219491/#content`;
 
 const sleep = time => new Promise(resolve => {
@@ -60,6 +60,7 @@ const sleep = time => new Promise(resolve => {
         doubanId,
         cover: result.cover
     }
+    // https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1312700744.jpg
     broswer.close();
     process.send({
         data
