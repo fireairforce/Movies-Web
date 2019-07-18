@@ -7,7 +7,7 @@ const rp = require('request-promise-native');
 
 async function fetchMovie(item) {
     const url = `http://api.douban.com/v2/movie/subject/${item.doubanId}?apikey=0df993c66c0c636e29ecbb5344252a4a`;
-
+    //  rp能够直接去请求这个url
     const res = await rp(url);
     return res;
 };
