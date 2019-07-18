@@ -17,16 +17,6 @@ const uploadToQiniu = async (url, key) => {
                     resolve({
                         key
                     });
-                    // { video:
-                    //     'http://vt1.doubanio.com/201907181341/46676423975134252890470f56d08bd2/view/movie/M/301210226.mp4',
-                    //    doubanId: '1849031',
-                    //    poster:
-                    //     'https://img3.doubanio.com/view/photo/l_ratio_poster/public/p1312700744.jpg',
-                    //    cover:
-                    //     'https://img1.doubanio.com/img/trailer/medium/1696797559.jpg?',
-                    //    videoKey: 'http://wdlj.zoomdong.xin/3I3u7OEhVXrWQL_lP3Au3.mp4',
-                    //    coverKey: 'http://wdlj.zoomdong.xin/A25ceUF_TE7LpmYd9OX3z.png',
-                    //    posterKey: 'NnWxoxvl2a3AhQLSJwKsE.png' }
                 } else {
                     reject(info);
                 }
