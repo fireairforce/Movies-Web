@@ -9,3 +9,5 @@ dist
 build
 
 server/config/index.js
+
+./video.mp4
