@@ -29,6 +29,10 @@ readFile('./../../package.json', 'utf-8', data => {
     console.log('完成文件 1 读操作的回调');
 })
 
+readFile('./../../ReadMe.md','utf-8', data => {
+    console.log('完成文件 2 读操作的回调');
+})
+
 setImmediate(() => {
     console.log('immediate 立即回调');
 })
@@ -37,7 +41,7 @@ process.nextTick(() => {
     console.log('process.nextTick 回调');
 })
 
-process.resolve().then(() => {
+Promise.resolve().then(() => {
     yy.emit('event');
     // process在事件机制中的优先级
     process.nextTick(() => {
