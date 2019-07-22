@@ -71,7 +71,7 @@ userSchema.pre('save', next => {
     })
     next();
 });
-
+// methods是实例方法
 userSchema.methods = {
     comparePassword: (_password, password) => {
         // 来做一个明文密码与存储密码的比对

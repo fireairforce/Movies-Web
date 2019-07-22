@@ -3,13 +3,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // Mixed比较适用于数据类型变化比较频繁的数据
-const Mixed = Schema.Types.Mixed;
+const { Mixed,ObjectId } = Schema.Types;
 
 const movieSchema = new Schema({
     doubanId: {
         unique: true,
         type: String
     },
+    category: [{
+        type: ObjectId,
+        ref: 'Category'
+    }],
     rate: Number,
     title: String,
     // 简介
@@ -34,7 +38,7 @@ const movieSchema = new Schema({
     year: Number,
     // 标签使用数组类型声明数组
     tags: Array,
-
+   
     meta: {
         // 这条数据被创建时的时间
         createdAt: {
@@ -58,4 +62,4 @@ movieSchema.pre('save', next => {
 })
 // 先将这个模型建立起来，然后再将这个模型发布出去
 // 传入两个参数
-mongoose.model('movie', movieSchema)
+mongoose.model('Movie', movieSchema)

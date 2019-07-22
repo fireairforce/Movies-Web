@@ -7,10 +7,15 @@ const views = require('koa-views');
 const {
     resolve
 } = require('path');
-const { connect } = require('./database/init'); 
+const mongoose = require('mongoose');
+const { connect,initSchemas } = require('./database/init'); 
  
 (async () => {
   await connect();
+  initSchemas();
+  const Movie = mongoose.model('Movie');
+  const movies = await Movie.find({});
+  console.log('movies: ', movies);
 })();
 
 app.use(views(resolve(__dirname, './views'), {
