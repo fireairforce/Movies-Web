@@ -33,13 +33,13 @@ let scrape = async () => {
                 //  电影的标题
                 let title = item.innerText.slice(0, -4);
                 // 电影的doubanID
-                let doubanID = item.pathname.match(/\d+/)[0];
+                let doubanId = item.pathname.match(/\d+/)[0];
                 // 电影的海报图片地址
                 let poster = item.childNodes[0].childNodes[0].childNodes[0].currentSrc.replace('s_ratio', 'l_ratio')
                 links.push({
                     rate,
                     title,
-                    doubanID,
+                    doubanId,
                     poster
                 })
             })

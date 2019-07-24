@@ -44,7 +44,7 @@ const userSchema = new Schema({
         }
     }
 })
-userSchema.pre('save', next => {
+userSchema.pre('save', function (next) {
     if (this.isNew) {
         this.meta.createdAt = this.meta.upDateAt = Date.now();
     } else {
@@ -53,12 +53,12 @@ userSchema.pre('save', next => {
     next();
 });
 // 使用mongoose里面的一个虚拟字段的使用方法,这个字段不会被存进数据库
-userSchema.virtual('isLocked').get(() => {
+userSchema.virtual('isLocked').get(function () {
     return !!(this.lockUntil && this.lockUntil > Date.now());
 })
 
 // 在数据保存进数据库之前，对密码进行一个加密处理
-userSchema.pre('save', next => {
+userSchema.pre('save', function (next) {
     if (!user.isModified('password')) return next();
 
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {

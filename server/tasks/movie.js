@@ -3,6 +3,9 @@ const cp = require('child_process');
 const {
     resolve
 } = require('path');
+const mongoose = require('mongoose');
+// 导入mongoose，拿到movie的模型
+const Movie = mongoose.model('Movie');
 
 (async () => {
     const script = resolve(__dirname, '../crawler/trailer-list.js')
@@ -31,5 +34,18 @@ const {
     child.on('message', data => {
         let result = data.result;
         console.log('result: ', result);
+        // 遍历爬去到的数据，然后在数据库里面查找一波
+        result.forEach(async item => {
+            // 根据豆瓣ID来查找一下数据库里面有没有这组数据，如果没有就把它存进去
+            console.log(item.doubanId);
+            let movie = await Movie.findOne({
+                doubanId: item.doubanId
+            })
+
+            if (!movie) {
+                movie = new Movie(item);
+                await movie.save();
+            }
+        })
     })
 })();

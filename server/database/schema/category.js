@@ -26,9 +26,9 @@ const categorySchema = new Schema({
         }
     }
 });
-categorySchema.pre('save', next => {
+categorySchema.pre('save', function(next) {
     if (this.isNew) {
-        this.meta.createdAt = this.meat.upDatedAt = Date.now();
+        this.meta.createdAt = this.meta.upDatedAt = Date.now();
     } else {
         this.meta.upDatedAt = Date.now();
     }

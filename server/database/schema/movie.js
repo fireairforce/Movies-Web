@@ -3,7 +3,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // Mixed比较适用于数据类型变化比较频繁的数据
-const { Mixed,ObjectId } = Schema.Types;
+const {
+    Mixed,
+    ObjectId
+} = Schema.Types;
 
 const movieSchema = new Schema({
     doubanId: {
@@ -38,7 +41,7 @@ const movieSchema = new Schema({
     year: Number,
     // 标签使用数组类型声明数组
     tags: Array,
-   
+
     meta: {
         // 这条数据被创建时的时间
         createdAt: {
@@ -52,9 +55,10 @@ const movieSchema = new Schema({
         }
     }
 });
-movieSchema.pre('save', next => {
-    if (this.isNew) {
-        this.meta.createdAt = this.meat.upDatedAt = Date.now();
+movieSchema.pre('save', function (next) {
+    if (this.isNew) { 
+        // this 值得是 当前的数据的save实体
+        this.meta.createdAt = this.meta.upDatedAt = Date.now();
     } else {
         this.meta.upDatedAt = Date.now();
     }
