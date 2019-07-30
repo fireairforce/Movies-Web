@@ -34,8 +34,8 @@ async function fetchMovie(item) {
           { summary: '' } 
         ]
     })
-    // 这里注意API的限额
-    for(let i = 0;i < [movies[0]].length ;i++){
+    // 这里注意API的限额，可以使用[movies[0]].length
+    for(let i = 0;i < movies.length ;i++){
         let movie = movies[i];
         // 请求一波获得一个数据
         let movieData = await fetchMovie(movie);

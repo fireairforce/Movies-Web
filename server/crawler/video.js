@@ -26,7 +26,7 @@ process.on('message', async movies => {
             waitUntil: 'networkidle2'
             // 当网页空闲的时候，表示页面已经加载完成了
         })
-        await sleep(1000);
+        await sleep(500);
         // 来获取详情页面
         const result = await page.evaluate(() => {
             //  回调函数里面的代码都是在浏览器环境里面执行的,用 var 声明变量可能比较保险  

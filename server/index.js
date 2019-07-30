@@ -17,7 +17,8 @@ const { connect,initSchemas } = require('./database/init');
    // 把它 require 进来，他就会启动子进程去爬取数据，然后把爬取到的数据存在数据库里面  
 //    require('./tasks/movie');
 //    require('./tasks/api');
-     require('./tasks/trailer');
+    //  require('./tasks/trailer');
+     require('./tasks/qiniu');
 })();
 
 app.use(views(resolve(__dirname, './views'), {
@@ -31,4 +32,4 @@ app.use(async (ctx, next) => {
     })
 })
 
-app.listen(4469);
+app.listen(4450);

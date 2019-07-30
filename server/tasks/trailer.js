@@ -41,21 +41,25 @@ const Category = mongoose.model('Category');
         let movie = await Movie.findOne({
             doubanId: doubanId
         })
+        // 如果有预告片和封面图，就将这些值取下来存好，放进数据库。
         if(data.video){
             movie.video = data.video;
             movie.cover = data.cover;
             await movie.save();
-            // 
         } else {
-            // 如果这条video已经存在了,就把他从movie原来的数据库里面移走即可,否则存进去就行,当然category里面也要记得移走
+            // 如果我们抓取到的那个数据是没有video的话，我们直接将这条数据直接移走就行了，不需要没有预告片的数据
             await movie.remove();
+            // 只是删了电影可能还不够，还需要从目录层里面删一下
             let movieTypes = movie.movieTypes
+
             for(let i = 0;i<movieTypes.length;i++){
                 let type = movieTypes[i];
+                // 拿到每一个type，然后查询一下
                 let cat = Category.findOne({
                    name: type
                 })
-                if(cat){
+                // 如果那一条电影被删了，那么分类里面对应的分类也要跟着删除
+                if(cat && cat.movies){
                     let idx = cat.movies.indexOf(movie._id)
                     if(idx > -1){
                       cat.movies = cat.movies.splice(idx,1);
@@ -66,5 +70,6 @@ const Category = mongoose.model('Category');
         }
         // console.log(data);
     })
+    // 将数据库里面查询到的movies发送给video 去爬取
     child.send(movies)
 })();
