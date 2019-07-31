@@ -5,6 +5,7 @@ const {
     resolve
 } = require('path');
 
+
 // 指定一下mongoose里面的promise
 mongoose.Promise = global.Promise;
 // 通过exports来暴露一个方法给外面,拿到所有的Schemas，这些schemas下面它会自动通过里面的mongoose.model来创建
@@ -13,6 +14,23 @@ exports.initSchemas = () => {
     // 拿到所有schema下面所有的js文件，然后通过forEach逐步加载进来
     glob.sync(resolve(__dirname, './schema/', '**/*.js')).forEach(require)
 }
+// 利用这个函数来创建一个管理员账号
+exports.initAdmin = async() => {
+    const User = mongoose.model('User');
+    // 先在数据库里面查询一下我们要创建的数据里面是否存在
+    let user = await User.findOne({
+        username:'zoomdong'
+    })
+    if(!user){
+        const user = new User({
+            username:'zoomdong',
+            email:'wudong@hrsoft.net',
+            password:'wd1344492820.',
+        })
+        await user.save();
+    }
+ }
+
 exports.connect = () => {
     // 连接次数到达一定的限度之后将不会在继续连接数据库，因为没有意义。
     let maxConnectTimes = 0;

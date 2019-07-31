@@ -59,17 +59,16 @@ userSchema.virtual('isLocked').get(function () {
 
 // 在数据保存进数据库之前，对密码进行一个加密处理
 userSchema.pre('save', function (next) {
-    if (!user.isModified('password')) return next();
-
+    if (!this.isModified('password')) return next();
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err) return next(err);
         bcrypt.hash(this.password, salt, (error, hash) => {
             if (error) return next(error);
             this.password = hash;
+            // 用next()让它跳到下一个阶段
             next();
         })
     })
-    next();
 });
 // methods是实例方法
 userSchema.methods = {

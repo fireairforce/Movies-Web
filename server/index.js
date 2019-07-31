@@ -6,19 +6,20 @@ const app = new Koa();
 const views = require('koa-views');
 const { resolve } = require('path');
 const mongoose = require('mongoose');
-const { connect,initSchemas } = require('./database/init'); 
- 
+const { connect,initSchemas,initAdmin } = require('./database/init');  
+
 (async () => {
   await connect();
   initSchemas();
-//   const Movie = mongoose.model('Movie');
-//   const movies = await Movie.find({});
-//   console.log('movies: ', movies);
-   // 把它 require 进来，他就会启动子进程去爬取数据，然后把爬取到的数据存在数据库里面  
-//    require('./tasks/movie');
-//    require('./tasks/api');
+  await initAdmin();
+    //   const Movie = mongoose.model('Movie');
+    //   const movies = await Movie.find({});
+    //   console.log('movies: ', movies);
+    //   把它 require 进来，他就会启动子进程去爬取数据，然后把爬取到的数据存在数据库里面  
+    //  require('./tasks/movie');
+    //  require('./tasks/api');
     //  require('./tasks/trailer');
-     require('./tasks/qiniu');
+    //  require('./tasks/qiniu');
 })();
 
 app.use(views(resolve(__dirname, './views'), {
@@ -32,4 +33,4 @@ app.use(async (ctx, next) => {
     })
 })
 
-app.listen(4450);
+app.listen(4440);
