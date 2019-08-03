@@ -7,6 +7,8 @@ const views = require('koa-views');
 const { resolve } = require('path');
 const mongoose = require('mongoose');
 const { connect,initSchemas,initAdmin } = require('./database/init');  
+const router = require('./routes');
+// 在启动文件里面引用激活
 
 (async () => {
   await connect();
@@ -21,10 +23,13 @@ const { connect,initSchemas,initAdmin } = require('./database/init');
     //  require('./tasks/trailer');
     //  require('./tasks/qiniu');
 })();
+// 在routes里面使用引用一下
+app.use(router.routes()).use(router.allowedMethods())
 
 app.use(views(resolve(__dirname, './views'), {
     extension: 'pug'
 }))
+
 
 app.use(async (ctx, next) => {
     await ctx.render('index', {
