@@ -24,7 +24,7 @@ const router = require('./routes');
     //  require('./tasks/qiniu');
 })();
 // 在routes里面使用引用一下
-app.use(router.routes()).use(router.allowedMethods())
+// app.use(router.routes()).use(router.allowedMethods())
 
 app.use(views(resolve(__dirname, './views'), {
     extension: 'pug'
