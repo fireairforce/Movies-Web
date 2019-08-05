@@ -8,8 +8,10 @@ dist
 
 build
 
+./package-lock.json
+
 server/config/index.js
 
 ./video.mp4
 
-package-lock.json
+.cache
