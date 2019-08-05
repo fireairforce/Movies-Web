@@ -27,13 +27,14 @@ export class Route {
       const controllers = isArray(controller);
       const prefixPath = conf.target[symbolPrefix];
       // 如果存在prefixPath就对路由进行一层拼接
-        if (prefixPath) {
-          prefixPath = normalizePath(prefixPath);
-          }
-        const routerPath = prefixPath + conf.path;
-        this.router[conf.method](routerPath, ...controllers);
+      if (prefixPath) {
+        prefixPath = normalizePath(prefixPath);
+      }
+      const routerPath = prefixPath + conf.path;
+      this.router[conf.method](routerPath, ...controllers);
       // 使用完成之后封装一下所有请求的方法
     }
+    // 使用use这个api来调用中间件
     this.app.use(this.router.routes());
     this.app.use(this.router.allowedMethods());
   }

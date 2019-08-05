@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "nodemon server/index.js",
-    "build": "rm -rf parcel/dist && parcel build parcel/index.html --no-cache -d parcel/dist --public-url /dist/"
+    "build": "rm -rf parcel/dist && parcel build src/index.html --no-cache -d dist --public-url /dist/"
   },
   "repository": {
     "type": "git",
@@ -47,7 +47,10 @@
     "request-promise-native": "^1.0.7"
   },
   "devDependencies": {
+    "autoprefixer": "^9.6.1",
     "babel-core": "^6.26.3",
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "cssnext": "^1.8.4",
+    "node-sass": "^4.12.0"
   }
 }
