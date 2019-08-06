@@ -1,5 +1,23 @@
-import Home from './views/home';
-import Detail from './views/movie/detail';
+import React from 'react'
+import Loadable from 'react-loadable';
+
+function Loading({ error }) {
+  if(error){
+    return 'Opps Error!!';
+  } else {
+    return <h3>页面正在加载中，不要慌张</h3>
+  }
+}
+
+const Home = Loadable({
+  loader: () => import('./views/home'),
+  loading: Loading
+})
+
+const Detail = Loadable({
+  loader: () => import('./views/movie/detail'),
+  loading: Loading
+})
 
 export default [
   {

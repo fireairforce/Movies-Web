@@ -36,7 +36,7 @@ const useMiddlewares = (app) => {
     await initAdmin();
 
     await useMiddlewares(app);
-    app.listen(4550);
+    app.listen(8899);
     //   把它 require 进来，他就会启动子进程去爬取数据，然后把爬取到的数据存在数据库里面  
     //  require('./tasks/movie');
     //  require('./tasks/api');
