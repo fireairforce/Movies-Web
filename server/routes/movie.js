@@ -21,7 +21,8 @@ export class movieController {
     // 查询所有电影的方法
     const movies = await getAllMovies(type, year)
     ctx.body = {
-      movies
+      success:true,
+      data:movies,
     }
   }
   @get('/:id')

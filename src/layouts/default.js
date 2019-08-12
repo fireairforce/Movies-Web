@@ -26,10 +26,10 @@ export default class LayoutDefault extends Component{
     window._LOADING_ = null;
   }
   matchRouteName = this.props.match ? navRoutes.find(e=> e.name === this.props.match.params.type) ? navRoutes.find(e=> e.name === this.props.params.type).name : '全部' : navRoutes[0].name
-  toggeleLoading = (state = false, tip = '再等一下下~') => {
+  toggeleLoading = (status = false, tip = '再等一下下~') => {
     this.setState({
       tip,
-
+      loading: status
     })
   }
    render(){
@@ -52,7 +52,7 @@ export default class LayoutDefault extends Component{
              float:'left'
            }}
           >
-            <a href={'/'} className='hover-scale logo-text' style={{ color:'#fff2e8' }}>KOA2学习构造</a>
+            <a href={'/'} className='hover-scale logo-text' style={{ color:'#fff2e8' }}>KOA2学习网站</a>
           </MenuItem> 
           {
             navRoutes.map((item,key)=>(

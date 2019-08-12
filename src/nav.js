@@ -24,9 +24,6 @@ export default [
     name:'冒险',
     path:`/list/${encodeURIComponent('冒险')}`
   },{
-    name:'喜剧',
-    path:`/list/${encodeURIComponent('喜剧')}`
-  },{
     name: '灾难',
     path: `/list/${encodeURIComponent('灾难')}`
   },
