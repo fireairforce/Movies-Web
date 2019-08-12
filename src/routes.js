@@ -1,7 +1,10 @@
 import React from 'react'
 import Loadable from 'react-loadable';
+import Home from './views/home';
+import Detail from './views/movie/detail'
 
 function Loading({ error }) {
+  console.log(error);
   if(error){
     return 'Opps Error!!';
   } else {
@@ -9,15 +12,15 @@ function Loading({ error }) {
   }
 }
 
-const Home = Loadable({
-  loader: () => import('./views/home'),
-  loading: Loading
-})
+// const Home = Loadable({
+//   loader: () => import('./views/home'),
+//   loading: Loading
+// })
 
-const Detail = Loadable({
-  loader: () => import('./views/movie/detail'),
-  loading: Loading
-})
+// const Detail = Loadable({
+//   loader: () => import('./views/movie/detail'),
+//   loading: Loading
+// })
 
 export default [
   {

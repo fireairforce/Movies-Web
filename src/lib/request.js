@@ -4,7 +4,7 @@ import {
 } from 'antd';
 
 const defaultAxiosConf = {
-  timeout: 5000
+  timeout: 5000,
   // 最大的请求时间
 }
 

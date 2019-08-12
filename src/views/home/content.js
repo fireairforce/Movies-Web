@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import { Row,Card, Col, Badge,Icon } from 'antd';
+import { Row,Card, Col, Badge,Icon,Modal,Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -7,9 +7,64 @@ import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const site = 'http://wdlj.zoomdong.xin/';
 const Meta = Card.Meta;
-
+const DPlayer = window.DPlayer
 export default class Content extends Component{
   
+   state = {
+     visible:false
+   }
+   
+   _handleCancel = (e) => {
+    this.setState({
+      visible:false
+    })
+   }
+
+   _handleClose = (e) => {
+    if(this.player && this.player.pause){
+      this.player.pause();
+    }
+   }
+
+   _jumpToDetail = () => {
+     const { url } = this.props;
+     url && window.open(url);
+    }
+
+   _showModal = (movie) => {
+     this.setState({
+       visible:true
+     })
+     const video = site + movie.videoKey
+     const pic = site + movie.coverKey
+     if(!this.player){
+      //  增加演示放置弹窗没有被渲染到dom结构中去
+       setTimeout(()=>{
+          this.player = new DPlayer({
+            container: document.getElementsByClassName('videoModal')[0],
+            screenshot: true,
+            // 自动播放
+            autoplay: true,
+            video:{
+              url:video,
+              pic:pic,
+              thumbnails: pic
+            }
+          })
+       },500)
+     } else {
+       if(this.player.video.currentSrc !== video){
+         this.player.switchVideo({
+           url:video,
+           autoplay: true,
+           pic:pic,
+           type:'auto'
+         })
+       }
+       this.player.play();
+     }
+   }
+
   _renderContent = () => {
     const { movies } = this.props;
     return(
@@ -43,11 +98,15 @@ export default class Content extends Component{
                    ]}
                    cover={
                    <img  
+                    onClick = {()=>{
+                      this._showModal(item)
+                    }}
                     //   这里对图片的处理使用了七牛的图片剪裁功能
                     src={site + item.posterKey + '?imageMogr2/thumbnail/x1680/crop/1080x1600'} />}
                  >
                    {/* 标题和描述 */}
                    <Meta 
+                     onClick={this._jumpToDetail}
                      style = {{ height:'202px',overflow:'hidden' }}
                      title={<Link to={`/detail/${item._id}`} >{item.title}</Link>}
                      description={<Link to={`/detail/${item._id}`} >{item.summary}</Link>}
@@ -57,12 +116,20 @@ export default class Content extends Component{
              ))
            }
          </Row>
+         <Modal
+           className='videoModal'
+           footer={null}
+           afterClose={this._handleClose}
+           visible={this.state.visible}
+           onCancel={this._handleCancel}
+         >
+           <Spin size="large"/>
+         </Modal>
       </div>
     )
   }
   
   render(){
-    // console.log(this.props);
     return(
       <div style={{ padding: '10px' }}>
          { this._renderContent() }

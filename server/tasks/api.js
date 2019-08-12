@@ -91,16 +91,4 @@ async function fetchMovie(item) {
             await movie.save();
         }
     }
-        // movies.map(async movie=>{
-        //     let movieData = await fetchMovie(movie);
-        //     //  movieData最后返回的数据是string,我们把它格式化成JSON
-        //     try{
-        //         movieData = JSON.parse(movieData);
-        //         console.log(movieData.tags);
-        //         console.log(movieData.summary);
-        //     } catch(err){
-        //         console.log(err);
-        //     }
-        //     // console.log('movieData: ', movieData);
-        // })
 })();
