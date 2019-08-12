@@ -7,6 +7,8 @@ export default class Home extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+       collapsed: false,
+      selectedKey: '0',
       years: ['2025','2024','2023','2022','2021','2020','2019','2018'],
       type: this.props.match.params.type,
       year: this.props.match.params.year,
@@ -45,16 +47,18 @@ export default class Home extends React.Component{
        selectedKeys:key
      })
   }
-
+   
   render(){
-    const { years,selectedKeys } = this.state;
+    const { years,selectedKeys,collapsed } = this.state;
     return(
       <Layout {...this.props}>
-        <div className="flex-rot full">
+        <div className="flex-row full">
           <Menu
             defaultSelectedKeys={[selectedKeys]}
             mode='inline'
-            style ={{height:'100%',overflowY:'scroll',maxWidth:'230'}}
+            inlineCollapsed={collapsed}
+            style ={{height:'100%',overflowY:'scroll',maxWidth:'230px'}}
+            // 点击选中的时候
             onSelect ={this._selectItem}
             className="align-self-start"
           >

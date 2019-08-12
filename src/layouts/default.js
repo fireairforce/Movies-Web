@@ -9,7 +9,6 @@ const getMenuContent = ({ path,name }) => (
     { name }
   </a>
 )
-
 export default class LayoutDefault extends Component{
   constructor(props){
     super(props);
@@ -42,28 +41,28 @@ export default class LayoutDefault extends Component{
            mode="horizontal"
            defaultSelectedKeys={[this.matchRouteName]}
          >
-          <MenuItem 
-           style ={{
-             marginLeft: '24px',
-             marginRight: '30px',
-             fontSize:'18px',
-             textAlign:'center',
-             color:'#fff !important',
-             float:'left'
-           }}
-          >
-            <a href={'/'} className='hover-scale logo-text' style={{ color:'#fff2e8' }}>KOA2学习网站</a>
-          </MenuItem> 
-          {
-            navRoutes.map((item,key)=>(
-              <MenuItem key={item.name}>
-                 {
-                   getMenuContent({...item})
-                 }
-              </MenuItem>
-            ))
-          }
-          </Menu>
+            <MenuItem 
+            style ={{
+              marginLeft: '24px',
+              marginRight: '30px',
+              fontSize:'18px',
+              textAlign:'center',
+              color:'#fff !important',
+              float:'left'
+            }}
+            >
+               <a href={'/'} className='hover-scale logo-text' style={{ color:'#fff2e8' }}>KOA2学习网站</a>
+            </MenuItem> 
+            {
+              navRoutes.map((item,key)=>(
+                <MenuItem key={item.name}>
+                  {
+                      getMenuContent({...item})
+                  }
+                </MenuItem>
+              ))
+            }
+        </Menu>
           <Spin
             spinning = {loading}
             tip = {tip}
