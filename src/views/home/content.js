@@ -26,11 +26,6 @@ export default class Content extends Component{
     }
    }
 
-   _jumpToDetail = () => {
-     const { url } = this.props;
-     url && window.open(url);
-    }
-
    _showModal = (movie) => {
      this.setState({
        visible:true
@@ -106,7 +101,7 @@ export default class Content extends Component{
                  >
                    {/* 标题和描述 */}
                    <Meta 
-                     onClick={this._jumpToDetail}
+                     onClick={()=>{this.props.history.push(`/detail/${item._id}`)}}
                      style = {{ height:'202px',overflow:'hidden' }}
                      title={<Link to={`/detail/${item._id}`} >{item.title}</Link>}
                      description={<Link to={`/detail/${item._id}`} >{item.summary}</Link>}

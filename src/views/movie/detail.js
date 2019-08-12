@@ -2,10 +2,17 @@ import React,{ Component } from 'react';
 import { Tabs } from 'antd';
 import moment from 'moment';
 import { request } from '../../lib'; 
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
 
+const callback = (key) => {
+  console.log(key);
+}
+
+const site = 'http://wdlj.zoomdong.xin/'
 const DPlayer = window.DPlayer;
 const TabPane = Tabs.TabPane;
 export default class Detail extends Component{
