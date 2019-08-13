@@ -1,9 +1,8 @@
 import React,{ Component } from 'react';
-import { Tabs } from 'antd';
+import { Tabs,Badge } from 'antd';
 import moment from 'moment';
 import { request } from '../../lib'; 
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
@@ -33,7 +32,7 @@ export default class Detail extends Component{
   _getMovieDetail = () => {
     request({
       method: 'get',
-      url: `api/v0/movies/${this.state._id}`
+      url: `/api/v0/movies/${this.state._id}`
     })
     .then(data => {
       const movie = data.movie
