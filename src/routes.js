@@ -1,14 +1,15 @@
 import React from 'react'
 import Loadable from 'react-loadable';
+import { Spin } from 'antd';
 // import Home from './views/home';
 // import Detail from './views/movie/detail'
 
 function Loading({ error }) {
-  console.log(error);
+  // console.log(error);
   if(error){
     return 'Opps Error!!';
   } else {
-    return <h3>页面正在加载中，不要慌张</h3>
+    return <Spin size="large">加载中</Spin>
   }
 }
 
@@ -22,6 +23,11 @@ const Detail = Loadable({
   loading: Loading
 })
 
+const Login = Loadable({
+  loader: () => import('./views/admin/login'),
+  loading: Loading
+})
+
 export default [
   {
     name:'首页',
@@ -32,7 +38,12 @@ export default [
     name:'详情页',
     path:'/detail/:id',
     component: Detail
-  },
+  },{
+    name:'后台入口',
+    path:'/login',
+    icon:'admin',
+    component: Login
+  }
 ] 
 
 
