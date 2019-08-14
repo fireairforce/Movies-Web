@@ -22,7 +22,7 @@ export default class Home extends React.Component{
   _getAllmovies = () => {
     request(window._LOADING_)({
       method:'get',
-      url:`api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`
+      url:`/api/v0/movies?type=${this.state.type || ''}&year=${this.state.year || ''}`
     }).then(res => {
       this.setState({
         movies: res
