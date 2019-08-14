@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import { request } from '../../lib';
 import './login.sass';
+// 为了支持es6的写法
 import "babel-polyfill";
 const FormItem = Form.Item;
 
@@ -14,7 +15,6 @@ function Login(props){
   
   function handleSubmit(e){
     e.preventDefault();
-    // console.log(props.form.validateFields);
     props.form.validateFields(async (err,values)=>{
       console.log(values);
       if(!err){

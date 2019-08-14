@@ -16,8 +16,7 @@ export class userController {
     const {
       email,
       password
-    } = ctx.request.body;
-    console.log(email,password);
+    } = ctx.request.header;
     const matchData = await checkPassword(email, password);
     // 如果用户信息压根不存在
     if (!matchData.user) {
