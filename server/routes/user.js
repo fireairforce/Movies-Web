@@ -17,6 +17,7 @@ export class userController {
       email,
       password
     } = ctx.request.header;
+    console.log(ctx.request.body);
     const matchData = await checkPassword(email, password);
     // 如果用户信息压根不存在
     if (!matchData.user) {
@@ -33,7 +34,7 @@ export class userController {
     }
 
     return (ctx.body = {
-      success: true,
+      success: false,
       err:'密码不正确'
     })
   }
