@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "start": "rm -rf dist && rm -rf .cache && NODE_ENV=development nodemon ./start.js",
+    "start": "sh mongo.sh && rm -rf dist && rm -rf .cache && NODE_ENV=development nodemon ./start.js",
     "build": "rm -rf parcel/dist && parcel build src/index.html --no-cache -d dist --public-url /dist/"
   },
   "repository": {
