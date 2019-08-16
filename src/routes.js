@@ -1,11 +1,8 @@
 import React from 'react'
 import Loadable from 'react-loadable';
 import { Spin } from 'antd';
-// import Home from './views/home';
-// import Detail from './views/movie/detail'
 
 function Loading({ error }) {
-  // console.log(error);
   if(error){
     return 'Opps Error!!';
   } else {
@@ -40,7 +37,7 @@ export default [
     component: Detail
   },{
     name:'后台入口',
-    path:'/login',
+    path:'/admin',
     icon:'admin',
     component: Login
   }

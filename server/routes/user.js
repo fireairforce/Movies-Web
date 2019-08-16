@@ -8,17 +8,18 @@ const {
   checkPassword
 } = require('../service/user');
 
-@controller('/api/v0/user')
+@controller('/admin')
 export class userController {
-  @post('/')
+  @post('/login')
   async login(ctx, next) {
+    // 要写一个解析post的中间价
     // 通过 request 里面的 body 拿到 email 和 password
     const {
       email,
       password
-    } = ctx.request.header;
-    console.log(ctx.request.body);
+    } = ctx.request.body;
     const matchData = await checkPassword(email, password);
+    console.log(matchData);
     // 如果用户信息压根不存在
     if (!matchData.user) {
       return (ctx.body = {

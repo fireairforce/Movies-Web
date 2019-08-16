@@ -16,11 +16,10 @@ function Login(props){
   function handleSubmit(e){
     e.preventDefault();
     props.form.validateFields(async (err,values)=>{
-      // console.log(values);
       if(!err){
-        request(_toggleLoading)({
+        request(_toggleLoading())({
           method:'post',
-          url:'/api/v0/user',
+          url:'/admin/login',
           data: {
             ...values
           }
@@ -29,7 +28,7 @@ function Login(props){
           if(res&&res.sucess===false){
             return;
           } else {
-            this.props.history.push('admin/list')
+            this.props.history.replace('/admin/list')
           }
           // this.props.history.replace('/admin/list')
         })
@@ -57,7 +56,12 @@ function Login(props){
             )}
           </FormItem>
           <FormItem>
-            <Button style={{ width: '100%' }} htmlType='submit' loading={loading}>
+            <Button 
+              style={{ width: '100%' }} 
+              htmlType='submit' 
+              loading={loading}
+              type="primary"
+            >
               Log in
             </Button>
           </FormItem>

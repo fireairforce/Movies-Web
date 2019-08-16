@@ -11,7 +11,7 @@ const app = new Koa();
 // 使用ramda的一个库
 const R = require('ramda');
 // 声明一个中间件的数组
-const MIDDLEWARES = ['router','parcel'];
+const MIDDLEWARES = ['common','router','parcel'];
 
 const useMiddlewares = (app) => {
     // 使用 R.map来遍历所有中间件
