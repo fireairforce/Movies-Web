@@ -1,7 +1,7 @@
 import React ,{ Component } from 'react';
 import { Menu , Spin } from 'antd';
-import { Link } from 'react-router-dom';
 import navRoutes from './../nav';
+import { withRouter } from 'react-router-dom';
 
 const MenuItem = Menu.Item;
 const getMenuContent = ({ path,name }) => (
@@ -9,7 +9,7 @@ const getMenuContent = ({ path,name }) => (
     { name }
   </a>
 )
-export default class LayoutDefault extends Component{
+class LayoutDefault extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -51,7 +51,7 @@ export default class LayoutDefault extends Component{
               float:'left'
             }}
             >
-               <a href={'/'} className='hover-scale logo-text' style={{ color:'#fff2e8' }}>KOA2学习网站</a>
+               <a onClick={()=>this.props.history.push('/')} className='hover-scale logo-text' style={{ color:'#fff2e8' }}>KOA2学习网站</a>
             </MenuItem> 
             {
               navRoutes.map((item,key)=>(
@@ -74,3 +74,4 @@ export default class LayoutDefault extends Component{
      )
    }
 }
+export default withRouter(LayoutDefault);
