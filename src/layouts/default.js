@@ -4,8 +4,8 @@ import navRoutes from './../nav';
 import { withRouter } from 'react-router-dom';
 
 const MenuItem = Menu.Item;
-const getMenuContent = ({ path,name }) => (
-  <a href={path? path : '/'} style = {{color: '#fff2e8'}}>
+const getMenuContent = ({ path,name ,history}) => (
+  <a onClick={()=>history.push(path ? path : '/')}  style = {{color: '#fff2e8'}}>
     { name }
   </a>
 )
@@ -57,7 +57,7 @@ class LayoutDefault extends Component{
               navRoutes.map((item,key)=>(
                 <MenuItem key={item.name}>
                   {
-                      getMenuContent({...item})
+                      getMenuContent({...item,...this.props})
                   }
                 </MenuItem>
               ))
