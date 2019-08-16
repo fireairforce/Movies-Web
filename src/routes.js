@@ -25,6 +25,11 @@ const Login = Loadable({
   loading: Loading
 })
 
+const List = Loadable({
+  loader: () => import('./views/admin/list'),
+  loading: Loading
+})
+
 export default [
   {
     name:'首页',
@@ -40,6 +45,11 @@ export default [
     path:'/admin',
     icon:'admin',
     component: Login
+  },{
+    name:'后台详情页面',
+    path:'/admin/list',
+    // icon:'admin',
+    component: List
   }
 ] 
 

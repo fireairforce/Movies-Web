@@ -2,8 +2,6 @@ import React,{ useEffect, useState } from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import { request } from '../../lib';
 import './login.sass';
-// 为了支持es6的写法
-import "babel-polyfill";
 const FormItem = Form.Item;
 
 function Login(props){
