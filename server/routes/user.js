@@ -14,12 +14,13 @@ export class userController {
   async login(ctx, next) {
     // 要写一个解析post的中间价
     // 通过 request 里面的 body 拿到 email 和 password
+    // console.log(ctx.request.body);
     const {
       email,
       password
     } = ctx.request.body;
     const matchData = await checkPassword(email, password);
-    console.log(matchData);
+    // console.log(matchData);
     // 如果用户信息压根不存在
     if (!matchData.user) {
       return (ctx.body = {

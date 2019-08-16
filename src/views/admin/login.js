@@ -17,7 +17,7 @@ function Login(props){
     e.preventDefault();
     props.form.validateFields(async (err,values)=>{
       if(!err){
-        request(_toggleLoading())({
+        request(_toggleLoading)({
           method:'post',
           url:'/admin/login',
           data: {
@@ -28,9 +28,9 @@ function Login(props){
           if(res&&res.sucess===false){
             return;
           } else {
-            this.props.history.replace('/admin/list')
+            console.log(props.history);
+            props.history.replace('/admin/list')
           }
-          // this.props.history.replace('/admin/list')
         })
       }
     })
