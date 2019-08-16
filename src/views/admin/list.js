@@ -106,8 +106,12 @@ export default function List(props) {
       method:'get',
       url:'/api/v0/movies',
     }).then((res)=>{
-      // console.log(res);
-      setDataSource(res)
+      let tempArr=JSON.parse(JSON.stringify(res));
+      tempArr.length === 0 ? [] : tempArr.map((item,index)=>{
+        item.key = index;
+        return item;
+      })
+      setDataSource(tempArr)
     }).catch(()=>{
       setDataSource([]);
     })
@@ -116,11 +120,6 @@ export default function List(props) {
   useEffect(()=>{
     _getAllMovies();
   },[]); 
-
-  dataSource = dataSource.length === 0 ? '' : dataSource.map((item,index)=>{
-    item.key = index;
-    return item;
-  })
   
   return(
     <Layout {...props}>
