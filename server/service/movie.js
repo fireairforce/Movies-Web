@@ -17,6 +17,15 @@ export const getAllMovies = async (type, year) => {
   return movies;
 }
 
+export const findOneRemove = async (id) => {
+  const movie = await Movie.findOne({
+    _id: id
+  });
+  if(movie){
+    await movie.remove();
+  }
+}
+
 export const getMovieDetail = async (id) => {
   const movie = await Movie.findOne({
     _id: id

@@ -93,19 +93,14 @@ export default function List(props) {
     {
       title: '操作',
       key: 'action',
-      render: (text, record) => <Button type="danger" onClick={_delete}>删除</Button>
+      render: (text, record) => <Button type="danger" onClick={()=>_deleteMovies(record._id)}>删除</Button>
     }
   ]
 
-  function _delete(){
-    console.log('删除');
-    setCollapsed(!collapsed)
-  }
-
-  const _getAllMovies = () => {
+  const _deleteMovies = (id) => {
     request({
-      method:'get',
-      url:'/admin/movie/list',
+      method:'delete',
+      url: `/admin/movies?id=${id}`
     }).then((res)=>{
       let tempArr=JSON.parse(JSON.stringify(res));
       tempArr.length === 0 ? [] : tempArr.map((item,index)=>{
@@ -116,12 +111,32 @@ export default function List(props) {
     }).catch(()=>{
       setDataSource([]);
     })
+  }
+
+  const _getAllMovies = () => {
+    request({
+      method:'get',
+      url:'/admin/movie/list',
+    }).then((res)=>{
+      // let tempArr=JSON.parse(JSON.stringify(res));
+      // tempArr.length === 0 ? [] : tempArr.map((item,index)=>{
+      //   item.key = index;
+      //   return item;
+      // })
+      res?res.length===0?[]:res.map((item,index)=>{
+         item.key = index;
+         return item;
+      }):[]
+      setDataSource(res)
+    }).catch(()=>{
+      setDataSource([]);
+    })
   } 
 
   useEffect(()=>{
     _getAllMovies();
   },[]); 
-  
+
   return(
     <Layout {...props}>
         <div className='flex-row full'>
