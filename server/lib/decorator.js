@@ -4,6 +4,7 @@ const {
   resolve
 } = require('path');
 const _ = require('lodash');
+const R = require('ramda');
 
 // 通过lodash这个库来判断是不是数组，如果是数组就返回，不是数组就封装成数组
 const isArray = c => _.isArray(c) ? c : [c]
@@ -82,4 +83,54 @@ export const use = path => router({
 export const all = path => router({
   method: 'all',
   path: path
+})
+
+const changeToArr = R.unless(
+  R.is(isArray),
+  R.of
+)
+
+const convert = middleware => (target,key,descriptor) => {
+  target[key] = R.compose(
+    R.concat(
+      changeToArr(middleware)
+    ),
+    changeToArr
+  )(target[key])
+  return descriptor;
+}
+
+export const auth = convert (async (ctx,next)=>{
+  if(!ctx.session.user){
+    return(
+      ctx.body = {
+        success:false,
+        code: 401,
+        error:'登录信息失效，请重新登录'
+      }
+    )
+  }
+  await next();
+})
+
+// 判断它是否是管理员
+export const admin = role => convert (async (ctx,next)=>{
+  const { role } = ctx.session.user;
+
+  // 可以根据权限组来判断是否在权限组里面
+  const rules = {
+    admin: [1,4,5],
+    superAdmin: [1,2,3,4] 
+  }
+
+  if(!role || role !== 'admin'){
+    return(
+      ctx.body = {
+        success:false,
+        code: 401,
+        error:'你没有权限，来错地方了'
+      }
+    )
+  }
+  await next();
 })

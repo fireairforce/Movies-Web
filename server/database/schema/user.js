@@ -32,6 +32,10 @@ const userSchema = new Schema({
         default: 0
         // 默认值为0，必须要传
     },
+    role: {
+      type: String,
+      default:'user'
+    },
     lockUntil: Number,
     meta: {
         createdAt: {

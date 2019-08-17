@@ -26,6 +26,7 @@ exports.initAdmin = async() => {
             username:'zoomdong',
             email:'wudong@hrsoft.net',
             password:'wd1344492820.',
+            role:'admin'
         })
         await user.save();
     }

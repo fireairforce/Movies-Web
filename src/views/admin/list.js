@@ -98,6 +98,7 @@ export default function List(props) {
   ]
 
   function _delete(){
+    console.log('删除');
     setCollapsed(!collapsed)
   }
 

@@ -2,14 +2,30 @@ const {
   controller,
   post,
   get,
-  put
+  auth
 } = require('../lib/decorator');
 const {
   checkPassword
 } = require('../service/user');
+const {
+  getAllMovies,
+  getMovieDetail,
+  getRelativeMovies
+} = require('../service/movie');
 
 @controller('/admin')
 export class userController {
+  @get('/list')
+  @auth
+  async getMovieList(ctx,next) {
+    const { type, year } = ctx.query;
+    const movies = await getAllMovies();
+
+    ctx.body = {
+      success: true,
+      data: movies
+    }
+  }
   @post('/login')
   async login(ctx, next) {
     // 要写一个解析post的中间价
