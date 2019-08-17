@@ -85,19 +85,24 @@ export const all = path => router({
   path: path
 })
 
+// 判断一波是否是数组
 const changeToArr = R.unless(
   R.is(isArray),
   R.of
 )
 
+// convert相当于一个装饰器
 const convert = middleware => (target,key,descriptor) => {
-  target[key] = R.compose(
-    R.concat(
-      changeToArr(middleware)
-    ),
-    changeToArr
-  )(target[key])
-  return descriptor;
+  return (target,key,descriptor) => {
+     // R.compose来组合一下(从上到下)
+      target[key] = R.compose(
+        R.concat(
+          changeToArr(middleware)
+        ),
+        changeToArr
+      )(target[key])
+      return descriptor;
+  }
 }
 
 export const auth = convert (async (ctx,next)=>{
@@ -110,11 +115,13 @@ export const auth = convert (async (ctx,next)=>{
       }
     )
   }
+  // 执行完成之后，调用await
   await next();
 })
 
 // 判断它是否是管理员
-export const admin = role => convert (async (ctx,next)=>{
+export const admin = roleExpected => convert (async (ctx,next)=>{
+  // 先用 session 拿到 role
   const { role } = ctx.session.user;
 
   // 可以根据权限组来判断是否在权限组里面
@@ -122,8 +129,9 @@ export const admin = role => convert (async (ctx,next)=>{
     admin: [1,4,5],
     superAdmin: [1,2,3,4] 
   }
-
-  if(!role || role !== 'admin'){
+//  如果没有role或者role不为admin
+// 期待的管理员值(其实那边传过来的就是'admin')
+  if(!role || role !== roleExpected){
     return(
       ctx.body = {
         success:false,
@@ -133,4 +141,19 @@ export const admin = role => convert (async (ctx,next)=>{
     )
   }
   await next();
+})
+
+// 加一个字段的校验，来判断前端传递过来的字段有没有缺失
+
+export const required = rules => convert(async (ctx,next) => {
+  let errors = [];
+  //  检查数据里面的每一项object的键值对
+   const checkRules = R.forEachObjIndexed((item,index)=>{
+     errors = R.filter(i=>!R.has(i,ctx,request[index]))(item)
+   })
+
+   checkRules(rules);
+  if(errors.length){
+    ctx.throw(412,`${errors.join(',')} is required`)
+  }
 })

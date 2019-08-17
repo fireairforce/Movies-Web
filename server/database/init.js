@@ -22,6 +22,7 @@ exports.initAdmin = async() => {
         username:'zoomdong'
     })
     if(!user){
+        // 初始化一个admin账号
         const user = new User({
             username:'zoomdong',
             email:'wudong@hrsoft.net',

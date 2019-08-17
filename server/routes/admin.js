@@ -1,22 +1,24 @@
+
 const {
   controller,
   post,
   get,
-  auth
+  auth,
+  admin,
+  required
 } = require('../lib/decorator');
 const {
   checkPassword
 } = require('../service/user');
 const {
   getAllMovies,
-  getMovieDetail,
-  getRelativeMovies
 } = require('../service/movie');
 
 @controller('/admin')
-export class userController {
-  @get('/list')
+export class adminController {
+  @get('/movie/list')
   @auth
+  @admin('admin')
   async getMovieList(ctx,next) {
     const { type, year } = ctx.query;
     const movies = await getAllMovies();
@@ -27,6 +29,9 @@ export class userController {
     }
   }
   @post('/login')
+  @required({
+    body: ['email','password']
+  })
   async login(ctx, next) {
     // 要写一个解析post的中间价
     // 通过 request 里面的 body 拿到 email 和 password

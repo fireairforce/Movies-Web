@@ -105,7 +105,7 @@ export default function List(props) {
   const _getAllMovies = () => {
     request({
       method:'get',
-      url:'/api/v0/movies',
+      url:'/admin/movie/list',
     }).then((res)=>{
       let tempArr=JSON.parse(JSON.stringify(res));
       tempArr.length === 0 ? [] : tempArr.map((item,index)=>{
