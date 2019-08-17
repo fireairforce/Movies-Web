@@ -85,27 +85,20 @@ export const all = path => router({
   path: path
 })
 
-// 判断一波是否是数组
-const changeToArr = R.unless(
-  R.is(isArray),
-  R.of
-)
+const decorate = (args,middleware) => {
+  let [ target,key,descriptor ] = args;
 
-// convert相当于一个装饰器
-const convert = middleware => (target,key,descriptor) => {
-  return (target,key,descriptor) => {
-     // R.compose来组合一下(从上到下)
-      target[key] = R.compose(
-        R.concat(
-          changeToArr(middleware)
-        ),
-        changeToArr
-      )(target[key])
-      return descriptor;
-  }
+  target[key] = isArray(target[key]);
+  target[key].unshift(middleware);
+
+  return descriptor;
 }
+// convert相当于一个装饰器
+const convert = middleware => (...args) => decorate(args,middleware)
+
 
 export const auth = convert (async (ctx,next)=>{
+  // console.log(ctx.session.user);
   if(!ctx.session.user){
     return(
       ctx.body = {
@@ -147,13 +140,24 @@ export const admin = roleExpected => convert (async (ctx,next)=>{
 
 export const required = rules => convert(async (ctx,next) => {
   let errors = [];
-  //  检查数据里面的每一项object的键值对
-   const checkRules = R.forEachObjIndexed((item,index)=>{
-     errors = R.filter(i=>!R.has(i,ctx,request[index]))(item)
-   })
 
-   checkRules(rules);
+  R.forEachObjIndexed(
+    (val, key) => {
+      errors = errors.concat(
+        R.filter(
+          name => !R.has(name, ctx.request[key])
+        )(val)
+      )
+    }
+  )(rules)
+  
+  //  console.log(errors);
   if(errors.length){
-    ctx.throw(412,`${errors.join(',')} is required`)
+    ctx.body = {
+      success: false,
+      code : 412,
+      err: `${errors.join(',')} is required`,
+    }
   }
+  await next();
 })

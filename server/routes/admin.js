@@ -20,14 +20,13 @@ export class adminController {
   @auth
   @admin('admin')
   async getMovieList(ctx,next) {
-    const { type, year } = ctx.query;
     const movies = await getAllMovies();
-
     ctx.body = {
       success: true,
       data: movies
     }
   }
+  
   @post('/login')
   @required({
     body: ['email','password']
@@ -41,8 +40,7 @@ export class adminController {
       password
     } = ctx.request.body;
     const matchData = await checkPassword(email, password);
-    // console.log(matchData);
-    // 如果用户信息压根不存在
+
     if (!matchData.user) {
       return (ctx.body = {
         success: false,
@@ -51,6 +49,12 @@ export class adminController {
     }
     // 如果返回了true
     if (matchData.match) {
+      ctx.session.user = {
+        _id: matchData.user._id,
+        email: matchData.user.email,
+        role: matchData.user.role,
+        username: matchData.user.username
+      }
       return (ctx.body = {
         success: true
       })
