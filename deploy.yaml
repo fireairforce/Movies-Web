@@ -1,0 +1,23 @@
+apps: 
+ - script: ./server/index.js
+   name: 'Koa2'
+   env:
+     COMMON_VARIABLE: true
+   env_production: 
+     NODE_ENV: production
+deploy: 
+  production: 
+    user: zoomdong,
+    host: 
+     - zoomdong.xin
+    port: 22
+    ref: origin/master
+    repo: 
+       https://github.com/fireairforce/koa-learning.git
+    path: 
+      /www/koa/production
+    ssh_options: StrictHostKeyChecking=no
+    pre-deploy: git fetch --all
+    post-deploy: 'npm install && npm run build && pm2 startOrRestart deploy.yaml --env production'
+    env: 
+      NODE_ENV: production
