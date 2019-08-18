@@ -7,7 +7,7 @@ apps:
      NODE_ENV: production
 deploy: 
   production: 
-    user: zoomdong,
+    user: root
     host: 
      - zoomdong.xin
     port: 22

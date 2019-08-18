@@ -18,7 +18,6 @@ const useMiddlewares = (app) => {
     R.map(R.compose(
         // 使用R.compose来
         R.forEachObjIndexed(
-
             initWith => initWith(app)
         ),
         // require上面通过R.forEachObjIndexed
