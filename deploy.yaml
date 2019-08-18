@@ -15,7 +15,7 @@ deploy:
     repo: 
        https://github.com/fireairforce/koa-learning.git
     path: 
-      /www/koa/production
+      /var/www/koa/production
     ssh_options: StrictHostKeyChecking=no
     pre-deploy: git fetch --all
     post-deploy: 'npm install && npm run build && pm2 startOrRestart deploy.yaml --env production'
