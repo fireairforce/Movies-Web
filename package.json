@@ -19,10 +19,8 @@
   },
   "homepage": "https://github.com/fireairforce/koa-learning#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
     "antd": "^3.21.1",
     "axios": "^0.19.0",
-    "babel-polyfill": "^6.26.0",
     "bcrypt": "^3.0.6",
     "ejs": "^2.6.2",
     "glob": "^7.1.4",
