@@ -5,7 +5,9 @@
   "main": "server/index.js",
   "scripts": {
     "start": "sh mongo.sh && rm -rf dist && rm -rf .cache && NODE_ENV=development nodemon ./start.js",
-    "build": "rm -rf parcel/dist && parcel build src/index.html --no-cache -d dist --public-url /dist/"
+    "build": "rm -rf parcel/dist && parcel build src/index.html --no-cache -d dist --public-url /dist/",
+    "push": "pm2 deploy deploy.yaml production setup",
+    "update": "pm2 deploy deploy.yaml production update"
   },
   "repository": {
     "type": "git",
