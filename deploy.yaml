@@ -20,6 +20,6 @@ deploy:
     ssh_options: StrictHostKeyChecking=no
     pre-deploy: git fetch --all
     # post-deploy: 'npm install && npm run build && pm2 startOrRestart deploy.yaml --env production'
-    post-deploy: 'npm install && npm run build && pm2 startOrRestart deploy.yaml --env production'
+    post-deploy: 'npm install && pm2 startOrRestart deploy.yaml --env production'
     env: 
       NODE_ENV: production
