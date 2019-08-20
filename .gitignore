@@ -6,5 +6,5 @@ package-lock.json
 yarn-error.log
 jsconfig.json
 npm-debug.log
-dist
+# dist
 __dir__
