@@ -37,6 +37,7 @@ const uploadToQiniu = async (url, key) => {
             { videoKey: '' },
         ]
     })
+    console.log(movies);
     for(let i = 0;i<movies.length;i++){
         let movie = movies[i];
         //  如果movie对象里面有视频，并且这个视频没有被上传过的话

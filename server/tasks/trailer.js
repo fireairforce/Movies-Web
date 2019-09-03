@@ -68,7 +68,7 @@ const Category = mongoose.model('Category');
                 }
             }
         }
-        // console.log(data);
+        console.log(data);
     })
     // 将数据库里面查询到的movies发送给video 去爬取
     child.send(movies)
