@@ -62,15 +62,6 @@ exports.connect = () => {
             }
         })
         mongoose.connection.once('open', function () {
-            // 我们可以先用mongoose来建立一个数据库的模型
-            // const Dog = mongoose.model('Dog',{
-            //     name: String,
-            // })
-            // const dogA = new Dog({ name:'阿尔法' })
-            // dogA.save().then(()=>{
-            //     console.log('存储成功');
-            // })
-            // 连接成功之后使用resolve来改变一下状态
             resolve();
             console.log('MongoDB Connected successfully');
         })
